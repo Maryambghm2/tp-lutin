@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.behavioralObserver.NotifyLutin;
-import org.example.behavioralObserver.ProductionLine;
-import org.example.behavioralObserver.Subject;
-import org.example.behavioralObserver.UpdateManager;
+import org.example.behavioralObserver.*;
 import org.example.creationalFactory.*;
 import org.example.structuralDecorator.PlainToy;
 import org.example.structuralDecorator.RibbonDecorator;
@@ -21,42 +18,57 @@ public class Main {
         // Création jouet avec ajout papier cadeau :
         Toy wrappingToy = new WrappingDecorator(rubanToy);
 
+        // Lutin qui sera en production
         Subject lutin1 = new NotifyLutin();
 
-        // Création alertes
-//        UpdateManager updateManager = new UpdateManager();
-//        updateManager.addLutin(lutin1);
-//        System.out.println(lutin1);
-        ProductionLine productionLine = new ProductionLine();
-        NotifyLutin notifyLutin = new NotifyLutin();
+        // Lutin qui sera en decoration
+        Subject lutin2 = new NotifyLutin();
 
+
+        // Création alerte
+        ProductionLine productionLine = new ProductionLine();
+        productionLine.addLutin(lutin1);
+
+        DecorationLine decorationLine = new DecorationLine();
+        decorationLine.addLutin(lutin2);
 
 
         // Essai avec poupée
         ToyFactory dollFactory = new DollFactory();
         Toy doll = dollFactory.createToys();
+//        System.out.println(doll.getDescription());
+
+        // Alerte production lutin
         productionLine.produceToy(doll);
-        System.out.println(doll.getDescription());
 
         Toy decoratedDoll = new RibbonDecorator(doll);
-        productionLine.decorateToy(decoratedDoll, "ruban");
 
-        System.out.println(doll.getDescription() + ",  décoration : " + baseToy.getDescription());
+        // Alerte décoration lutin
+        decorationLine.decorateToy(doll, "ruban");
 
-        System.out.println(doll.getDescription() + ", décoration : " + rubanToy.getDescription());
+//        System.out.println(doll.getDescription() + ",  décoration : " + baseToy.getDescription());
+//
+//        System.out.println(doll.getDescription() + ", décoration : " + rubanToy.getDescription());
 
 
         // Essai avec car
         ToyFactory carFactory = new CarFactory();
         Toy car = carFactory.createToys();
-        System.out.println(car.getDescription() + ", décoration : "+ wrappingToy.getDescription());
+        productionLine.produceToy(car);
+
+        Toy decoratedCar = new WrappingDecorator(car);
+
+        decorationLine.decorateToy(car, "papier cadeau");
+
+//        System.out.println(car.getDescription() + ", décoration : "+ wrappingToy.getDescription());
 
 
         // Essai avec Monopoly
         ToyFactory monopolyFactory = new MonopolyFactory();
         Toy monopoly = monopolyFactory.createToys();
 
-        System.out.println(monopoly.getDescription()+ ", décoration : "+ rubanToy.getDescription());
+        productionLine.produceToy(monopoly);
+//        System.out.println(monopoly.getDescription()+ ", décoration : "+ rubanToy.getDescription());
 
 
 

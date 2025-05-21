@@ -7,8 +7,8 @@ public void produceToy(Toy toy) {
     notifyLutin("Jouet produit :"+ toy.getDescription());
 }
 
-    public void decorateToy(Toy toy, String decoration) {
-        notifyLutin("Décoration ajoutée: " + decoration);
-    }
+//    public void decorateToy(Toy toy, String decoration) {
+//        notifyLutin("Décoration ajoutée: " + decoration);
+//    }
 
 }
